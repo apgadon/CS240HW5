@@ -1,1 +1,11 @@
-Class Setup:
+Class Setup (from top to bottom):
+GUI
+Control Tower
+TakeOffQueue	LandingQueue
+Airplane
+
+After some research(1), I learned a plane takes around 6 hours between landing and taking off for a new flight.
+Since the smallest time unit for this simulation is 10 minutes, this equals 30 time units betweeen landing
+and takeoff.
+(1) USA Today. "How does an airline prepare a plane between flights?" 
+	<https://www.usatoday.com/story/travel/flights/2014/12/22/united-flight-behind-the-scenes/20606597/>
