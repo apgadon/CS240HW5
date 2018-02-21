@@ -22,6 +22,9 @@ public class Airplane {
 		return fuel--;		//CHECK if returns AND permanently decrements
 	}
 	
+	public void refuel() {
+		fuel = 15;
+	}
 	public boolean willCrash() {
 		return (fuel == 5);
 	}
