@@ -1,5 +1,24 @@
 //"Apron" refers to where planes are parked between landing and takeoff.
 //Class contains a regular queue of landed planes that iterates every 30 time units.
+
+
+
+
+
+
+
+
+
+
+
+//CHECK IF USING AN ARRAY IS MORE EFFICIENT/BETTER!!!!
+
+
+
+
+
+
+
 public class Apron {
 	
 	private Node top;
