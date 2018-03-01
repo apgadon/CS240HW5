@@ -1,9 +1,9 @@
 //Node is a public class because it is used by multiple classes (Apron, ___Queue)
-public class Node {
+public class Node<T> {
 
-	Airplane val;
+	T val;
 	Node next;
-	public Node(Airplane v) {
+	public Node(T v) {
 		val = v;
 	}
 }
