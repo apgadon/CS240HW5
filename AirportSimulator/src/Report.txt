@@ -1,8 +1,9 @@
 Class Setup (from top to bottom):
-GUI
-Control Tower
-TakeOffQueue	LandingQueue
-Airplane
+GUI			Calls only to methods in ControlTower
+ControlTower		Utilizes PriorityQueue, Queue, and Airplane
+PriorityQueue<T>	Generic adaptation of a priority queue. Nothing specific to Airplanes.
+Queue			Generic application of a queue. Nothing specific to airplanes
+Airplane		Object represent
 
 After some research(1), I learned a plane takes around 6 hours between landing and taking off for a new flight.
 Since the smallest time unit for this simulation is 10 minutes, this equals 30 time units betweeen landing
