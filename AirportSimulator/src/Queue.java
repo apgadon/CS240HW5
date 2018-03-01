@@ -4,6 +4,10 @@ public class Queue<T> {
 
   Node head;  //head points at the first Node
   Node tail;  //tail points at the last Node
+  
+  //THIS NODE CLASS SHOULDN'T BE HERE. Delete as soon as this class correctly
+  //communicates with the separate Node Generic class
+  /*
   private class Node{
     T val;
     Node next;
@@ -11,7 +15,7 @@ public class Queue<T> {
       val = v;
     }
   }
-  
+  */
   //initializes queue as empty
   public Queue(){
     //****************DO WE NEED THIS?
