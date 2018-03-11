@@ -4,6 +4,7 @@ public class Queue<T> {
 
   Node<T> head;  //head is EQUAL TO the first Node
   Node<T> tail;  //tail is EQUAL TO the last Node
+  int numItems;
   
   //initializes queue as empty
   public Queue(){
@@ -13,20 +14,26 @@ public class Queue<T> {
   
   //adds a Node to the end of the linked list
   public void enqueue(T newE){
-	  Node<T> newEntry = new Node<>(newE);
-	  if(tail != null)
-		  tail.next = newEntry; //add to end
-	  tail = newEntry;
-	  if(isEmpty()) {
-		  head = newEntry;
+	  try {
+		  Node<T> newEntry = new Node<>(newE);
+		  if(tail != null)
+			  tail.next = newEntry; //add to end
+		  if(isEmpty())
+			  head = newEntry;		//if empty, set to head as well
+		  
+		  tail = newEntry;			//for both circumstances, tail set to new.
+		  numItems++;
+	  }catch(IllegalArgumentException e) {
+		  System.out.println(e.getMessage());
 	  }
   }
   
   public T dequeue(){
 	  if(!isEmpty()){   //if possible to remove a Node
     	T toReturn = head.val;
-    	head = head.next;     //This SHOULD take care of a 1-Node queue by pointing
-                                      //head.next = null. CHECK************* b/c might cause null.
+    	head = head.next;
+    	numItems--;
+    	
     	return toReturn;
 	  } 
 	  else
@@ -34,7 +41,7 @@ public class Queue<T> {
   }
   
   public boolean isEmpty(){
-	  return ( head == null);
+	  return ( head == null ) && ( tail == null);
   }
   
   public void clear(){
@@ -44,5 +51,14 @@ public class Queue<T> {
 	  }
   }
   
+  public String toString() {
+	  String total = "QUEUE:\t";
+	  Node<T> n = head;
+	  while(n != null) {
+		  total += n.val + "\t";
+		  n = n.next;
+	  }
+	  return total;
+  }
   
 }

@@ -1,5 +1,5 @@
 
-public class Airplane {
+public class Airplane implements Updatable{
 
 	private int fuel, type, takeOffWait, landWait;
 	private String company;
@@ -44,4 +44,7 @@ public class Airplane {
 		return company + Integer.toString(type);
 	}
 	
+	public void update() {
+		
+	}
 }
