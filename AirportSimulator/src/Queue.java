@@ -2,9 +2,9 @@
 //implementation of a queue using a singly linked list
 public class Queue<T> {
 
-  Node<T> head;  //head is EQUAL TO the first Node
-  Node<T> tail;  //tail is EQUAL TO the last Node
-  int numItems;
+  private Node<T> head;  //head is EQUAL TO the first Node
+  private Node<T> tail;  //tail is EQUAL TO the last Node
+  private int numItems;
   
   //initializes queue as empty
   public Queue(){
@@ -49,6 +49,10 @@ public class Queue<T> {
 		  head.next = null;
 		  tail.next = null;
 	  }
+  }
+  
+  public int getSize() {
+	  return numItems;
   }
   
   public String toString() {

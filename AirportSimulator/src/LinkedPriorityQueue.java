@@ -64,7 +64,11 @@ public class LinkedPriorityQueue<T extends Comparable<T> & Updatable>{
 	}
 	
 	public void updateValues(){
-		//@TODO Use update() on each Node.val
+		Node<T> iterator = head;
+		while(iterator != null) {
+			iterator.val.update();
+			iterator = iterator.next;
+		}
 	}
 	
 	 public String toString() {
