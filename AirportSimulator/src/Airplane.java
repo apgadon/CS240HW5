@@ -25,7 +25,7 @@ public class Airplane implements Updatable, Comparable<Airplane>{
 	}
 	
 	public boolean willCrash() {
-		return (fuel == 0);
+		return (fuel <= 0);
 	}
 	
 	public int getFuel() {
