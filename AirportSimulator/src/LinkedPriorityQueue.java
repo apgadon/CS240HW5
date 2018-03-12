@@ -11,7 +11,7 @@ public class LinkedPriorityQueue<T extends Comparable<T> & Updatable>{
 	}
 	
 	//The planes should sort in the priority queue by placing those with the least amount of fuel at the front
-	public void enqueue(T newE, int pr){
+	public void enqueue(T newE){
 		  try {
 			  Node<T> newEntry = new Node<>(newE);
 			  Node<T> iterator = head;

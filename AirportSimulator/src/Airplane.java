@@ -4,15 +4,8 @@ public class Airplane implements Updatable, Comparable<Airplane>{
 	private int fuel, type, waitTime;
 	private String airliner;
 	private String[] airliners = {"Boeing", "Airbus", "Convair", "Bombardier"};
-	public Airplane(String c, int t) {	//default when full fuel
-		new java.util.Random();
-		airliner = c;
-		type = t;
-		fuel = ( (int) (Math.random() * 10) + 5 );	//random fuel from 5 to 15. Checked true
-		waitTime = 0;
-	}
-	
-	public Airplane() {		//Overloaded constructor when no name given. Randomize name
+
+	public Airplane() {		//Randomized name
 		new java.util.Random();
 		airliner = airliners[ (int) (Math.random() * (airliners.length - 1))];
 		type = (int)((Math.random() * 100) -1);
@@ -28,7 +21,7 @@ public class Airplane implements Updatable, Comparable<Airplane>{
 	//Compares fuel, returns a negative integer, zero, or a positive integer 
 	//as this object is less than, equal to, or greater than the specified object.
 	public int compareTo(Airplane other) {
-		return (other.getFuel() - fuel);
+		return (fuel - other.getFuel());
 	}
 	
 	public boolean willCrash() {
