@@ -2,11 +2,20 @@
 public class Airplane implements Updatable, Comparable<Airplane>{
 
 	private int fuel, type, waitTime;
-	private String company;
-	
+	private String airliner;
+	private String[] airliners = {"Boeing", "Airbus", "Convair", "Bombardier"};
 	public Airplane(String c, int t) {	//default when full fuel
-		company = c;
+		new java.util.Random();
+		airliner = c;
 		type = t;
+		fuel = ( (int) (Math.random() * 10) + 5 );	//random fuel from 5 to 15. Checked true
+		waitTime = 0;
+	}
+	
+	public Airplane() {		//Overloaded constructor when no name given. Randomize name
+		new java.util.Random();
+		airliner = airliners[ (int) (Math.random() * (airliners.length - 1))];
+		type = (int)((Math.random() * 100) -1);
 		fuel = ( (int) (Math.random() * 10) + 5 );	//random fuel from 5 to 15. Checked true
 		waitTime = 0;
 	}
@@ -35,7 +44,7 @@ public class Airplane implements Updatable, Comparable<Airplane>{
 	}
 	
 	public String toString() {
-		String toReturn = "Name: " + company + Integer.toString(type) 
+		String toReturn = "Name: " + airliner + Integer.toString(type) 
 			+ "\tFuel: " + fuel + "\tTime Waited: " + waitTime;
 		return toReturn;
 	}

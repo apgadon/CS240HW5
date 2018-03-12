@@ -22,7 +22,39 @@ public class ControlTower {
 	//release the helper method floodgates
 	public void iterate(){
 		
+		
+		//and finally
+		totalTime++;
 	}
+	
+	//random airplane generator. Returns a random plane 25% of the time.
+	public Airplane planeGenerator() {
+		new java.util.Random();
+		if(Math.random() >= 0.25) {	//return a plane 25% of the time
+			return new Airplane();
+		}
+		return null;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	//METHODS HANDLING STATISTICS:
 	//What is the average time spent waiting for take off?
 	//What is the longest time spent waiting for take off?
