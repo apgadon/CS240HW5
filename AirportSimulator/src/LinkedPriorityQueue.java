@@ -62,11 +62,6 @@ public class LinkedPriorityQueue<T extends Comparable<T> & Updatable>{
 			tail.next = null;
 		}
 	}
-
-	public boolean compareTo() {
-		//@TODO
-		return false;
-	}
 	
 	public void updateValues(){
 		//@TODO Use update() on each Node.val
@@ -74,7 +69,7 @@ public class LinkedPriorityQueue<T extends Comparable<T> & Updatable>{
 	
 	 public String toString() {
 		String total = "QUEUE:\t";
-		Node n = head;
+		Node<T> n = head;
 		while(n != null) {
 			total += n.val + "\t";
 			n = n.next;
