@@ -14,17 +14,24 @@ public class LinkedPriorityQueue<T extends Comparable<T> & Updatable>{
 	public void enqueue(T newE){
 		  try {
 			  Node<T> newEntry = new Node<>(newE);
+			  //System.out.println("Adding " + newE.toString());
 			  Node<T> iterator = head;
 			  while(iterator != null) {
 				  if(iterator.val.compareTo(newEntry.val) >= 0) {		//if iterator after newEntry
+					  //System.out.println("Compare " + iterator.val + " with " + newEntry.val
+					  //	+ "\nYou get " + iterator.val.compareTo(newEntry.val));
 					  newEntry.next = iterator.next;
-					  //iterator = newEntry;	//shouldn't need this but TROUBLESHOOT. It might iterate more
+					  iterator.next = newEntry;
+					  iterator = newEntry;			//wherever iterator stops is the insertion position.
 					  break;
 				  }
 				  else
 					  iterator = iterator.next;
 			  }
-			  iterator = newEntry;			//wherever iterator stops is the insertion position.
+			  if(head == null) {
+				  head = newEntry;
+			  }
+			  //System.out.println("Set iterator to " + newEntry.val.toString());
 			  numItems++;
 		  }catch(IllegalArgumentException e) {
 			  System.out.println(e.getMessage());

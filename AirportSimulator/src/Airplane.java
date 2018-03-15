@@ -37,8 +37,8 @@ public class Airplane implements Updatable, Comparable<Airplane>{
 	}
 	
 	public String toString() {
-		String toReturn = "Name: " + airliner + Integer.toString(type) 
-			+ "\tFuel: " + fuel + "\tTime Waited: " + waitTime;
+		String toReturn = "Name: " + airliner + Integer.toString(type)
+			+ " Fuel: " + fuel + " Time Waited: " + waitTime + "\n";
 		return toReturn;
 	}
 	

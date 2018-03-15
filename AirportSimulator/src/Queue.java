@@ -40,8 +40,13 @@ public class Queue<T> {
 		  return null;
   }
   
+  public T getFront() {
+	  if(!isEmpty())
+		  return head.val;
+	  return null;
+  }
   public boolean isEmpty(){
-	  return ( head == null ) && ( tail == null);
+	  return (numItems == 0);
   }
   
   public void clear(){
@@ -55,6 +60,9 @@ public class Queue<T> {
 	  return numItems;
   }
   
+  public Node<T> clone() {
+	  return head;
+  }
   public String toString() {
 	  String total = "QUEUE:\t";
 	  Node<T> n = head;

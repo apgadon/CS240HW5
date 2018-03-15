@@ -14,7 +14,7 @@ public class ControlTower {
 	private Queue<Airplane> takeoffSuccessQueue;
 	private Queue<Airplane> crashQueue;
 	
-	private int totalTime, maxLWait, maxTWait;
+	private int totalTime, maxLWait, maxTWait, totalPlanes;
 	private double avgLWait, avgTWait;
 	
 	public ControlTower() {
@@ -28,11 +28,19 @@ public class ControlTower {
 		takeoffSuccessQueue = new Queue<>();
 		crashQueue = new Queue<>();
 	
+		totalPlanes = 0;
 		totalTime = 0;
 		maxLWait = maxTWait = 0;
 		avgLWait = avgTWait = 0;
 	}
 	
+	public void start(int numStartingPlanes, int numIterations) {
+		for(int i = 0; i < numStartingPlanes; i++) {
+			takeoffQueue.enqueue(new Airplane());}
+		
+		for(int j = 0; j < numIterations; j++) {
+			iterate();}
+	}
 	//this big bertha is gonna make time pass and take in/land/take off random planes
 	//release the helper method floodgates
 	
@@ -55,10 +63,7 @@ public class ControlTower {
 		
 		//THEN, check if runway plane succeeded in landing. If so, transfer to takeoffQueue.
 		//Don't care about successful takeoff because they're going wherever they're going.
-		if(runway == 0 && !runwayPlane.willCrash() && needsTransfer == true) {
-			takeoffQueue.enqueue(runwayPlane);
-			runwayPlane = null;
-		}
+		checkRunwaySuccess();
 		
 		//THEN, add a plane to landing queue (by chance)
 		Airplane newLanding = planeGenerator();
@@ -70,18 +75,7 @@ public class ControlTower {
 		decreaseFuels();
 		
 		//THEN, add plane if runway is empty
-		if(runway == 0 && runwayPlane == null) {
-			if(!landingQueue.isEmpty()) {
-				runwayPlane = landingQueue.dequeue();
-				runway = 2;
-				needsTransfer = true;
-			}
-			else if (!takeoffQueue.isEmpty()) {
-				runwayPlane = takeoffQueue.dequeue();
-				runway = 3;
-				needsTransfer = false;
-			}
-		}
+		transferRunwayPlane();
 		
 		//and finally...
 		totalTime++;
@@ -93,14 +87,34 @@ public class ControlTower {
 	//Also checks the current plane on the runway, which could crash if it doesn't have
 	//enough fuel to cross the runway (3 or 2, depending on takeoff or landing)
 	public void checkStatus() {
-		while(landingQueue.getFront().willCrash() == false) {
-			crashQueue.enqueue(landingQueue.dequeue());		//transfer crashed plane to crash record
+		if(!landingQueue.isEmpty()) {
+			while(landingQueue.getFront() != null && landingQueue.getFront().willCrash() == false) {
+				avgLWait += landingQueue.getFront().getWait();	//add crashed plane's wait to avg
+				crashQueue.enqueue(landingQueue.dequeue());		//transfer crashed plane to crash record
+			}
 		}
 		if(runwayPlane != null && runwayPlane.willCrash()) {
 			crashQueue.enqueue(runwayPlane);
 			runwayPlane = null;
 			runway = 0;
 			//runway doesn't look like a word anymore :/
+		}
+	}
+	
+	//Check if runway plane succeeded in landing. If so, collect their stats and transfer to takeoffQueue.
+	public void checkRunwaySuccess() {
+		if(runway == 0) {	//if runway empty
+			if(runwayPlane != null && !runwayPlane.willCrash()) {	//if there's a runway plane
+				if(needsTransfer == true) {	//needsTransfer() checks if runwayPlane needs to transfer to takeoff
+					takeoffQueue.enqueue(runwayPlane);
+					avgLWait += runwayPlane.getWait();
+					landingSuccessQueue.enqueue(runwayPlane);
+				}
+				else {
+					takeoffSuccessQueue.enqueue(runwayPlane);
+				}
+				runwayPlane = null;
+			}
 		}
 	}
 	
@@ -114,10 +128,25 @@ public class ControlTower {
 		}
 	}
 	
+	public void transferRunwayPlane(){
+		if(runway == 0 && runwayPlane == null) {
+			if(!landingQueue.isEmpty()) {	//if there's planes waiting to land
+				runwayPlane = landingQueue.dequeue();
+				runway = 2;
+				needsTransfer = true;	//it's landing, so it'll need to transfer to the takeoff queue.
+			}
+			else if (!takeoffQueue.isEmpty()) {	//if there's no planes landing but there are taking off
+				runwayPlane = takeoffQueue.dequeue();
+				runway = 3;
+				needsTransfer = false;	//it's taking off, so it won't be back.
+			}
+		}
+	}
 	//random airplane generator. Returns a random plane 17%, or once every 6th units of time.
 	public Airplane planeGenerator() {
 		new java.util.Random();
-		if(randomize(17)) {	//return a plane 25% of the time
+		if(randomize(17)) {	//return a plane 17% of the time
+			totalPlanes++;
 			return new Airplane();
 		}
 		return null;
@@ -127,7 +156,7 @@ public class ControlTower {
 	//based on randomized number
 	public boolean randomize(int chance) {
 		new java.util.Random();
-		return ( (int) ( (Math.random() * chance) + 1) <= chance );
+		return ( (int) ( (Math.random() * 100) + 1) <= chance );
 	}
 	
 	
@@ -141,25 +170,75 @@ public class ControlTower {
 	//Did any planes crash?
 	//How many planes total took off and landed during the simulation?
 	
-	public double getTotalTime() {
+	public int getTotalTime() {
 		return totalTime;
 	}
 	public double getAverageTakeoffWait() {
+		Queue<Airplane> holder = new Queue<>();
+		while(!takeoffSuccessQueue.isEmpty()) {
+			avgTWait += takeoffSuccessQueue.getFront().getWait();
+			holder.enqueue(takeoffSuccessQueue.dequeue());
+		}
+		
+		while(!holder.isEmpty()) {
+			takeoffSuccessQueue.enqueue(holder.dequeue());
+		}
+		
+		avgTWait = avgTWait / takeoffSuccessQueue.getSize();
 		return avgTWait;
 	}
 	
 	public double getAverageLandingWait() {
+		
+		Queue<Airplane> holder = new Queue<>();
+		while(!landingSuccessQueue.isEmpty()) {
+			avgLWait += landingSuccessQueue.getFront().getWait();
+			holder.enqueue(landingSuccessQueue.dequeue());
+		}
+		
+		while(!holder.isEmpty()) {
+			landingSuccessQueue.enqueue(holder.dequeue());
+		}
+		
+		avgLWait = avgLWait / landingSuccessQueue.getSize();
 		return avgLWait;
 	}
 	
-	public double getMaxTakeoffWait() {
+	public int getMaxTakeoffWait() {
+		Queue<Airplane> holder = new Queue<>();
+		while(!takeoffSuccessQueue.isEmpty()) {
+			if(takeoffSuccessQueue.getFront().getWait() > maxTWait)
+				maxTWait = takeoffSuccessQueue.getFront().getWait();
+				
+			holder.enqueue(takeoffSuccessQueue.dequeue());
+		}
+		
+		//refill takeoffSuccessQueue for other stats methods
+		while(!holder.isEmpty()) {
+			takeoffSuccessQueue.enqueue(holder.dequeue());
+		}
 		return maxTWait;
 	}
 	
-	public double getMaxLandingWait() {
+	public int getMaxLandingWait() {
+		Queue<Airplane> holder = new Queue<>();
+		while(!landingSuccessQueue.isEmpty()) {
+			if(landingSuccessQueue.getFront().getWait() > maxLWait)
+				maxLWait = landingSuccessQueue.getFront().getWait();
+			
+			holder.enqueue(landingSuccessQueue.dequeue());
+		}
+		
+		//refill landingSuccessQueue for other stats methods
+		while(!holder.isEmpty()) {
+			landingSuccessQueue.enqueue(holder.dequeue());
+		}
 		return maxLWait;
 	}
 	
+	public int getTotalPlanes() {
+		return totalPlanes;
+	}
 	public int getTotalCrash() {
 		return crashQueue.getSize();
 	}
