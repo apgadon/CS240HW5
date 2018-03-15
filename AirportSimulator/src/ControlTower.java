@@ -35,28 +35,14 @@ public class ControlTower {
 	}
 	
 	public void start(int numStartingPlanes, int numIterations) {
+		totalPlanes = numStartingPlanes;
 		for(int i = 0; i < numStartingPlanes; i++) {
 			takeoffQueue.enqueue(new Airplane());}
 		
 		for(int j = 0; j < numIterations; j++) {
 			iterate();}
 	}
-	//this big bertha is gonna make time pass and take in/land/take off random planes
-	//release the helper method floodgates
-	
-	/*
-	 * Each time your loop iterates represents another moment in time. In each moment of time, you need to:
-	 * 
-	 * Decide if a plane should join the take-off queue
-	 * Decide if a plane should join the landing priority queue
-	 * 
-	 * Planes should show randomly, on average of about one every 6 units of time. 
-	 * Any plane joining the landing priority queue should have a random amount of 
-	 * remaining fuel assigned to it. This should range from 5 to 15 time-units of 
-	 * fuel left. Each unit of time, the amount of fuel left should decrement. If 
-	 * a plane's fuel reaches 0, it crashes. The planes should sort in the priority 
-	 * queue by placing those with the least amount of fuel at the front.
-	 */
+	//Makes time pass and take in/land/take off random planes
 	public void iterate(){
 		//FIRST, check if any planes crash
 		checkStatus();
@@ -77,7 +63,7 @@ public class ControlTower {
 		//THEN, add plane if runway is empty
 		transferRunwayPlane();
 		
-		//and finally...
+		//and finally increment time
 		totalTime++;
 	}
 	
@@ -97,7 +83,6 @@ public class ControlTower {
 			crashQueue.enqueue(runwayPlane);
 			runwayPlane = null;
 			runway = 0;
-			//runway doesn't look like a word anymore :/
 		}
 	}
 	

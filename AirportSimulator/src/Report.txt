@@ -1,12 +1,7 @@
-Class Setup (from top to bottom):
-GUI			Calls only to methods in ControlTower
-ControlTower		Utilizes PriorityQueue, Queue, and Airplane
-PriorityQueue<T>	Generic adaptation of a priority queue. Nothing specific to Airplanes.
-Queue			Generic application of a queue. Nothing specific to airplanes
-Airplane		Object represent
+CS 240 HW 5 - Airport Simulator
+Angela Gadon
 
-After some research(1), I learned a plane takes around 6 hours between landing and taking off for a new flight.
-Since the smallest time unit for this simulation is 10 minutes, this equals 30 time units betweeen landing
-and takeoff.
-(1) USA Today. "How does an airline prepare a plane between flights?" 
-	<https://www.usatoday.com/story/travel/flights/2014/12/22/united-flight-behind-the-scenes/20606597/>
+STRATEGY:
+The main problem that arose during this program were NullPointerErrors
+
+CONCEPTS:

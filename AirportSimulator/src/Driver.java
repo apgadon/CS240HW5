@@ -2,16 +2,20 @@
 public class Driver {
 	public static void main(String[] args) {
 		ControlTower x = new ControlTower();
-		x.start(25, 500);
-		System.out.println("All numbers in arbitrary time unit.\nTotal time: " + x.getTotalTime()
-				+ "\n1. Average Takeoff Wait: " + x.getAverageTakeoffWait()
-				+ "\n2. Max Takeoff Wait: " + x.getMaxTakeoffWait()
-				+ "\n3. Average Landing Wait: " + x.getAverageLandingWait()
-				+ "\n4. Max Landing Wait: " + x.getMaxLandingWait() 
+		x.start(100, 1000);
+		System.out.println("---AIRPORT SIMULATOR TEST RESULTS---"
+				+ "\nAll numbers in arbitrary time unit.\nTotal time: " + x.getTotalTime()
+				+ "\nDEPARTURES:"
+				+ "\n1.\tAverage Takeoff Wait: \t" + x.getAverageTakeoffWait()
+				+ "\n2.\tMax Takeoff Wait: \t" + x.getMaxTakeoffWait()
 				
-				+ "\nTotal Planes: " + x.getTotalPlanes()
-				+ "\n5. Total Crashed: " + x.getTotalCrash()
-				+ "\n6b. Total Taken Off: " + x.getTotalTakenOff()
-				+ "\n6a. Total Landed: " + x.getTotalLanded());
+				+ "\n\nLANDINGS"
+				+ "\n3.\tAverage Landing Wait: \t" + x.getAverageLandingWait()
+				+ "\n4.\tMax Landing Wait: \t" + x.getMaxLandingWait() 
+				
+				+ "\n\nPLANES:"
+				+ "\n5.\tTotal Crashed: \t\t" + x.getTotalCrash()
+				+ "\n6b.\tTotal Taken Off: \t" + x.getTotalTakenOff()
+				+ "\n6a.\tTotal Landed: \t\t" + x.getTotalLanded());
 	}
 }
