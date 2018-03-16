@@ -2,6 +2,21 @@ CS 240 HW 5 - Airport Simulator
 Angela Gadon
 
 STRATEGY:
-The main problem that arose during this program were NullPointerErrors
+This simulator was constructed using mainly object-oriented programming. The actual object being stored in the
+queues is Airplane. Queue and LinkedPriorityQueue are Generics for objects that implement Comparable and Updatable.
+All three classes are used in ControlTower, the "engine" of the program which organizes all the actual instances
+of Queue and PriorityQueue that hold planes. At the beginning of programming, I started out creating the Airplane class, 
+which needed to contain both fuel for updating and a wait field in order to keep track of statistics that would be 
+which needed to overload compareTo. After creating Queue I based PriorityQueue off of much of the former, only changing
+it so that a plane's fuel would be used as a point of comparison for update. Then I created ControlTower, starting with
+the iterate() method, adding all the helped methods as needed, and then created methods for keeping track of statistics.
+
+The main problem that arose during this program were NullPointerErrors due to invalid pointing. Solving any problematic
+pointing was easier to do before the entire code had been finished, so to troubleshoot I tested each class (Queue, Priority
+Queue, then ControlTower) in isolation first. Another problem was in the statistics, where I had to store dequeued 
+elements in a temporary queue in order to retain the landing and takeoffSuccessQueues in ControlTower.
 
 CONCEPTS:
+I gained a greater understanding of the differences between Queues and PriorityQueues from a linked list application. 
+I also had to figure out a way to iterate through a regular Queue without deleting all the data, as one of the main
+principles of a queue (and a stack by extension) is access to only the front of the structure. 
